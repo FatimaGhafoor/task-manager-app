@@ -1,0 +1,1 @@
+// auth.js - mock login logic
