@@ -33,15 +33,15 @@ function readFromStorage() {
   const raw = localStorage.getItem(STORAGE_KEY);
 
   if (!raw) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_DATA));
-    return [...SEED_DATA];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_TASKS));
+    return [...SEED_TASKS];
   }
 
   try {
     return JSON.parse(raw);
   } catch {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_DATA));
-    return [...SEED_DATA];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_TASKS));
+    return [...SEED_TASKS];
   }
 }
 
