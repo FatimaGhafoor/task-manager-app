@@ -30,17 +30,15 @@ const SEED_TASKS = [
 
 // This function read data from localStorage
 function readFromStorage() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-
-  if (!raw) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_TASKS));
-    return [...SEED_TASKS];
-  }
-
   try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_TASKS));
+      return [...SEED_TASKS];
+    }
     return JSON.parse(raw);
-  } catch {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_TASKS));
+  } catch (error) {
+    console.error("Storage read failed, using fallback:", error);
     return [...SEED_TASKS];
   }
 }
