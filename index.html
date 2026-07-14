@@ -8,6 +8,24 @@
   </head>
   <body>
     <h1>Task Manager</h1>
+    <div id="loading-spinner" class="hidden">Loading...</div>
+
+    <table id="tasks-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tasks-table-body"></tbody>
+    </table>
+    <div id="empty-state" class="hidden">No tasks found.</div>
+
+    <div id="pagination-controls"></div>
+
     <script type="module" src="js/app.js"></script>
   </body>
 </html>
