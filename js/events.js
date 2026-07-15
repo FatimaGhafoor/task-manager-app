@@ -5,14 +5,49 @@ import {
   getVisibleTasks,
   setCurrentPage,
   removeTaskFromState,
+  addTaskToState,
 } from "./state.js";
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
-import { deleteTask } from "./api.js";
+import { deleteTask, addTask } from "./api.js";
 
 // 2- DOM elements selection
 const tableBody = document.getElementById("tasks-table-body");
 const paginationControls = document.getElementById("pagination-controls");
+const taskForm = document.getElementById("task-form");
 
+export function initFormEvents() {
+  taskForm.addEventListener("submit", handleAddTask);
+}
+
+async function handleAddTask(e) {
+  e.preventDefault();
+
+  const title = document.getElementById("task-title").value;
+  const status = document.getElementById("task-status").value;
+  const priority = document.getElementById("task-priority").value;
+  const dueDate = document.getElementById("task-due-date").value;
+  if (!title || !status || !priority || !dueDate) {
+    alert("Please fill in all fields.");
+    return;
+  }
+  const newTask = { title, status, priority, dueDate };
+  const submitBtn = taskForm.querySelector('button[type="submit"]');
+
+  try {
+    submitBtn.disabled = true;
+    showSpinner();
+    const savedTask = await addTask(newTask);
+    addTaskToState(savedTask);
+    renderTable(getVisibleTasks());
+    taskForm.reset();
+    console.log("Task added successfully:", savedTask);
+  } catch (error) {
+    console.error("Add task failed:", error.message);
+  } finally {
+    hideSpinner();
+    submitBtn.disabled = false;
+  }
+}
 // 3- Table events
 export function initTableEvents() {
   tableBody.addEventListener("click", handleTableClick);
@@ -38,14 +73,14 @@ function handleEditTask(taskId) {
   // Implement edit functionality here
 }
 
-function handleDeleteTask(taskId) {
+async function handleDeleteTask(taskId) {
   const confirmed = confirm("Are you sure you want to delete this task?");
   if (!confirmed) return;
 
   try {
     // Implement delete functionality here
     showSpinner();
-    deleteTask(taskId);
+    await deleteTask(taskId);
     removeTaskFromState(taskId);
     renderTable(getVisibleTasks());
     console.log(`Task deleted successfully : ${taskId}`);

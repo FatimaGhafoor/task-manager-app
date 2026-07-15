@@ -10,6 +10,27 @@
     <h1>Task Manager</h1>
     <div id="loading-spinner" class="hidden">Loading...</div>
 
+    <h2>Add New Task</h2>
+    <form id="task-form">
+      <input type="text" id="task-title" placeholder="Task title" required />
+
+      <select id="task-status">
+        <option value="todo">Todo</option>
+        <option value="in-progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+
+      <select id="task-priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <input type="date" id="task-due-date" required />
+
+      <button type="submit">Add Task</button>
+    </form>
+
     <table id="tasks-table">
       <thead>
         <tr>

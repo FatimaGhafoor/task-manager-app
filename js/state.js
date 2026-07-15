@@ -99,3 +99,7 @@ export function getVisibleTasks() {
 export function removeTaskFromState(taskId) {
   state.tasks = state.tasks.filter((task) => task.id !== taskId);
 }
+
+export function addTaskToState(task) {
+  state.tasks.push(task);
+}
