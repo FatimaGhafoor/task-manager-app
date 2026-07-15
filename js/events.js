@@ -6,9 +6,11 @@ import {
   setCurrentPage,
   removeTaskFromState,
   addTaskToState,
+  getState,
+  updateTaskInState,
 } from "./state.js";
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
-import { deleteTask, addTask } from "./api.js";
+import { deleteTask, addTask, updateTask } from "./api.js";
 
 // 2- DOM elements selection
 const tableBody = document.getElementById("tasks-table-body");
@@ -16,10 +18,10 @@ const paginationControls = document.getElementById("pagination-controls");
 const taskForm = document.getElementById("task-form");
 
 export function initFormEvents() {
-  taskForm.addEventListener("submit", handleAddTask);
+  taskForm.addEventListener("submit", handleFormSubmit);
 }
 
-async function handleAddTask(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
 
   const title = document.getElementById("task-title").value;
@@ -30,23 +32,36 @@ async function handleAddTask(e) {
     alert("Please fill in all fields.");
     return;
   }
-  const newTask = { title, status, priority, dueDate };
+  const taskData = { title, status, priority, dueDate };
   const submitBtn = taskForm.querySelector('button[type="submit"]');
 
   try {
     submitBtn.disabled = true;
     showSpinner();
-    const savedTask = await addTask(newTask);
-    addTaskToState(savedTask);
+
+    if (editingTaskId) {
+      const updatedTask = await updateTask(editingTaskId, taskData);
+      updateTaskInState(editingTaskId, updatedTask);
+      console.log("Task updated successfully:", updatedTask);
+    } else {
+      const savedTask = await addTask(taskData);
+      addTaskToState(savedTask);
+      console.log("Task added successfully:", savedTask);
+    }
     renderTable(getVisibleTasks());
-    taskForm.reset();
-    console.log("Task added successfully:", savedTask);
+    resetForm();
   } catch (error) {
-    console.error("Add task failed:", error.message);
+    console.error("Form submit failed:", error.message);
   } finally {
     hideSpinner();
     submitBtn.disabled = false;
   }
+}
+function resetForm() {
+  taskForm.reset();
+  editingTaskId = null;
+  const submitBtn = taskForm.querySelector('button[type="submit"]');
+  submitBtn.textContent = "Add Task";
 }
 // 3- Table events
 export function initTableEvents() {
@@ -68,9 +83,23 @@ function handleTableClick(e) {
   }
 }
 // 4- Task actions
+let editingTaskId = null;
 function handleEditTask(taskId) {
-  console.log(`Edit task with ID: ${taskId}`);
-  // Implement edit functionality here
+  const state = getState();
+  const task = state.tasks.find((t) => t.id === taskId);
+  if (!task) {
+    console.error(`Task with ID ${taskId} not found.`);
+    return;
+  }
+  editingTaskId = taskId;
+
+  document.getElementById("task-title").value = task.title;
+  document.getElementById("task-status").value = task.status;
+  document.getElementById("task-priority").value = task.priority;
+  document.getElementById("task-due-date").value = task.dueDate;
+
+  const submitBtn = taskForm.querySelector('button[type="submit"]');
+  submitBtn.textContent = "Update Task";
 }
 
 async function handleDeleteTask(taskId) {

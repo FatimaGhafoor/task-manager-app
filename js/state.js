@@ -103,3 +103,10 @@ export function removeTaskFromState(taskId) {
 export function addTaskToState(task) {
   state.tasks.push(task);
 }
+
+export function updateTaskInState(id, updatedTask) {
+  const index = state.tasks.findIndex((task) => task.id === id);
+  if (index !== -1) {
+    state.tasks[index] = updatedTask;
+  }
+}
