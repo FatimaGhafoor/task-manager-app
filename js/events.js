@@ -1,8 +1,13 @@
 // events.js - event delegation, handlers
 
 // 1- Imports
-import { getVisibleTasks, setCurrentPage } from "./state.js";
-import { renderTable } from "./dom.js";
+import {
+  getVisibleTasks,
+  setCurrentPage,
+  removeTaskFromState,
+} from "./state.js";
+import { renderTable, showSpinner, hideSpinner } from "./dom.js";
+import { deleteTask } from "./api.js";
 
 // 2- DOM elements selection
 const tableBody = document.getElementById("tasks-table-body");
@@ -34,8 +39,22 @@ function handleEditTask(taskId) {
 }
 
 function handleDeleteTask(taskId) {
-  console.log(`Delete task with ID: ${taskId}`);
-  // Implement delete functionality here
+  const confirmed = confirm("Are you sure you want to delete this task?");
+  if (!confirmed) return;
+
+  try {
+    // Implement delete functionality here
+    showSpinner();
+    deleteTask(taskId);
+    removeTaskFromState(taskId);
+    renderTable(getVisibleTasks());
+    console.log(`Task deleted successfully : ${taskId}`);
+  } catch (error) {
+    console.error("Delete failed:", error.message);
+  } finally {
+    // Optionally, you can re-render the table or update the UI after deletion
+    hideSpinner();
+  }
 }
 
 // 5- Pagination events

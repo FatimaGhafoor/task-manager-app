@@ -95,3 +95,7 @@ export function getVisibleTasks() {
     currentPage,
   };
 }
+
+export function removeTaskFromState(taskId) {
+  state.tasks = state.tasks.filter((task) => task.id !== taskId);
+}
