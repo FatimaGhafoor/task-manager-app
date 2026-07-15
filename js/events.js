@@ -8,14 +8,28 @@ import {
   addTaskToState,
   getState,
   updateTaskInState,
+  setSearchQuery,
 } from "./state.js";
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
+import { debounce } from "./utils.js";
+
+let editingTaskId = null;
 
 // 2- DOM elements selection
 const tableBody = document.getElementById("tasks-table-body");
 const paginationControls = document.getElementById("pagination-controls");
 const taskForm = document.getElementById("task-form");
+const searchInput = document.getElementById("search-input");
+
+export function initSearchEvents() {
+  searchInput.addEventListener("input", debounce(handleSearchInput, 300));
+}
+function handleSearchInput(e) {
+  const query = e.target.value.trim();
+  setSearchQuery(query);
+  renderTable(getVisibleTasks());
+}
 
 export function initFormEvents() {
   taskForm.addEventListener("submit", handleFormSubmit);
@@ -83,7 +97,7 @@ function handleTableClick(e) {
   }
 }
 // 4- Task actions
-let editingTaskId = null;
+
 function handleEditTask(taskId) {
   const state = getState();
   const task = state.tasks.find((t) => t.id === taskId);
