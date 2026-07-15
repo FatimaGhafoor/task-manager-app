@@ -10,6 +10,7 @@ import {
   updateTaskInState,
   setSearchQuery,
   setStatusFilter,
+  setSort,
 } from "./state.js";
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
@@ -23,6 +24,37 @@ const paginationControls = document.getElementById("pagination-controls");
 const taskForm = document.getElementById("task-form");
 const searchInput = document.getElementById("search-input");
 const statusFilter = document.getElementById("status-filter");
+const sortHeaders = document.querySelectorAll(".sortable");
+
+export function initSortEvents() {
+  sortHeaders.forEach((header) => {
+    header.addEventListener("click", handleSortClick);
+  });
+}
+
+function handleSortClick(e) {
+  const field = e.currentTarget.dataset.field;
+  const state = getState();
+  const currentSort = state.sort;
+  let direction = "asc";
+  if (currentSort.field === field && currentSort.direction === "asc") {
+    direction = "desc";
+  }
+  setSort(field, direction);
+  renderTable(getVisibleTasks());
+  updateSortIcons(field, direction);
+}
+
+function updateSortIcons(activeField, direction) {
+  sortHeaders.forEach((header) => {
+    const icon = header.querySelector(".sort-icon");
+    if (header.dataset.field === activeField) {
+      icon.textContent = direction === "asc" ? " ↑" : " ↓";
+    } else {
+      icon.textContent = " ↕";
+    }
+  });
+}
 
 export function initFilterEvents() {
   statusFilter.addEventListener("change", handleStatusFilterChange);
