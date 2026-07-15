@@ -9,6 +9,7 @@ import {
   getState,
   updateTaskInState,
   setSearchQuery,
+  setStatusFilter,
 } from "./state.js";
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
@@ -21,6 +22,17 @@ const tableBody = document.getElementById("tasks-table-body");
 const paginationControls = document.getElementById("pagination-controls");
 const taskForm = document.getElementById("task-form");
 const searchInput = document.getElementById("search-input");
+const statusFilter = document.getElementById("status-filter");
+
+export function initFilterEvents() {
+  statusFilter.addEventListener("change", handleStatusFilterChange);
+}
+
+function handleStatusFilterChange(e) {
+  const status = e.target.value;
+  setStatusFilter(status);
+  renderTable(getVisibleTasks());
+}
 
 export function initSearchEvents() {
   searchInput.addEventListener("input", debounce(handleSearchInput, 300));

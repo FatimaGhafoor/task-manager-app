@@ -8,6 +8,7 @@ import {
   initPaginationEvents,
   initFormEvents,
   initSearchEvents,
+  initFilterEvents,
 } from "./events.js";
 
 const tasks = await fetchTasks();
@@ -18,3 +19,4 @@ initTableEvents();
 initPaginationEvents();
 initFormEvents();
 initSearchEvents();
+initFilterEvents();
