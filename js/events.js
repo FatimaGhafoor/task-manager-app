@@ -15,6 +15,7 @@ import {
 import { renderTable, showSpinner, hideSpinner } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
 import { debounce } from "./utils.js";
+import { showToast } from "./toast.js";
 
 let editingTaskId = null;
 
@@ -100,16 +101,16 @@ async function handleFormSubmit(e) {
     if (editingTaskId) {
       const updatedTask = await updateTask(editingTaskId, taskData);
       updateTaskInState(editingTaskId, updatedTask);
-      console.log("Task updated successfully:", updatedTask);
+      showToast("Task updated successfully!", "success");
     } else {
       const savedTask = await addTask(taskData);
       addTaskToState(savedTask);
-      console.log("Task added successfully:", savedTask);
+      showToast("Task added successfully!", "success");
     }
     renderTable(getVisibleTasks());
     resetForm();
   } catch (error) {
-    console.error("Form submit failed:", error.message);
+    showToast("Failed to submit task.", "error");
   } finally {
     hideSpinner();
     submitBtn.disabled = false;
@@ -170,9 +171,9 @@ async function handleDeleteTask(taskId) {
     await deleteTask(taskId);
     removeTaskFromState(taskId);
     renderTable(getVisibleTasks());
-    console.log(`Task deleted successfully : ${taskId}`);
+    showToast("Task deleted successfully!", "success");
   } catch (error) {
-    console.error("Delete failed:", error.message);
+    showToast("Failed to delete task.", "error");
   } finally {
     // Optionally, you can re-render the table or update the UI after deletion
     hideSpinner();
