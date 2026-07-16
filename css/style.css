@@ -136,3 +136,39 @@ td {
     box-sizing: border-box;
   }
 }
+
+#board-view {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.board-column {
+  flex: 1;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px;
+  min-height: 300px;
+}
+
+.column-body {
+  min-height: 250px;
+}
+
+.task-card {
+  background: var(--border-color);
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+  cursor: grab;
+}
+
+.task-card.dragging {
+  opacity: 0.4;
+}
+
+.column-body.drag-over {
+  background: rgba(100, 100, 255, 0.1);
+  border: 2px dashed #6666ff;
+}

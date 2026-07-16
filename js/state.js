@@ -47,6 +47,10 @@ export function getState() {
   return state;
 }
 
+export function getAllTasks() {
+  return state.tasks;
+}
+
 // pipeline: filter → search → sort → paginate
 
 export function getVisibleTasks() {
@@ -96,14 +100,17 @@ export function getVisibleTasks() {
   };
 }
 
+// State manipulation functions for drag-and-drop and other updates
 export function removeTaskFromState(taskId) {
   state.tasks = state.tasks.filter((task) => task.id !== taskId);
 }
 
+// Add a new task to the state
 export function addTaskToState(task) {
   state.tasks.push(task);
 }
 
+// Update an existing task in the state
 export function updateTaskInState(id, updatedTask) {
   const index = state.tasks.findIndex((task) => task.id === id);
   if (index !== -1) {

@@ -1,5 +1,12 @@
 // dom.js - renders tasks table, pagination, loading state, empty state
 
+import {
+  setCurrentPage,
+  getVisibleTasks,
+  setSearchQuery,
+  setStatusFilter,
+  setSort,
+} from "./state.js";
 // 1- DOM elements selection
 const tableBody = document.getElementById("tasks-table-body");
 const emptyState = document.getElementById("empty-state");
@@ -68,4 +75,23 @@ function renderPagination(totalPages, currentPage) {
     buttons += `<button class="page-btn ${activeClass}" data-page="${i}">${i}</button>`;
   }
   paginationControls.innerHTML = buttons;
+}
+
+export function renderBoard(allTasks) {
+  const columns = {
+    todo: document.getElementById("todo-column"),
+    "in-progress": document.getElementById("in-progress-column"),
+    done: document.getElementById("done-column"),
+  };
+
+  Object.values(columns).forEach((col) => (col.innerHTML = ""));
+
+  allTasks.forEach((task) => {
+    const card = document.createElement("div");
+    card.className = "task-card";
+    card.draggable = true;
+    card.dataset.id = task.id;
+    card.textContent = task.title;
+    columns[task.status]?.appendChild(card);
+  });
 }

@@ -14,8 +14,10 @@ import {
   showLoginForm,
   showApp,
   initThemeEvents,
+  initViewToggleEvents,
 } from "./events.js";
 import { isLoggedIn } from "./auth.js";
+import { initDragDropEvents } from "./dragdrop.js";
 
 initTableEvents();
 initPaginationEvents();
@@ -25,6 +27,8 @@ initFilterEvents();
 initSortEvents();
 initAuthEvents();
 initThemeEvents();
+initViewToggleEvents();
+initDragDropEvents();
 
 if (isLoggedIn()) {
   showApp();

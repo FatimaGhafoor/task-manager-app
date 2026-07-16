@@ -11,12 +11,14 @@ import {
   setSearchQuery,
   setStatusFilter,
   setSort,
+  getAllTasks,
 } from "./state.js";
-import { renderTable, showSpinner, hideSpinner } from "./dom.js";
+import { renderTable, showSpinner, hideSpinner, renderBoard } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
 import { debounce } from "./utils.js";
 import { showToast } from "./toast.js";
 import { login, logout, isLoggedIn } from "./auth.js";
+
 
 let editingTaskId = null;
 
@@ -32,6 +34,28 @@ const logoutBtn = document.getElementById("logout-btn");
 const loginSection = document.getElementById("login-section");
 const appSection = document.getElementById("app-section");
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
+const toggleViewBtn = document.getElementById("toggle-view-btn");
+const boardView = document.getElementById("board-view");
+const tableWrapper = document.getElementById("tasks-table-wrapper");
+
+export function initViewToggleEvents() {
+  toggleViewBtn.addEventListener("click", handleViewToggle);
+}
+
+function handleViewToggle() {
+  const isBoardVisible = !boardView.classList.contains("hidden");
+
+  if (isBoardVisible) {
+    boardView.classList.add("hidden");
+    tableWrapper.classList.remove("hidden");
+    toggleViewBtn.textContent = "Switch to Board View";
+  } else {
+    boardView.classList.remove("hidden");
+    tableWrapper.classList.add("hidden");
+    toggleViewBtn.textContent = "Switch to Table View";
+    renderBoard(getAllTasks());
+  }
+}
 
 // 3- Theme toggle events
 export function initThemeEvents() {
