@@ -10,11 +10,11 @@ import {
   initSearchEvents,
   initFilterEvents,
   initSortEvents,
+  initAuthEvents,
+  showLoginForm,
+  showApp,
 } from "./events.js";
-
-const tasks = await fetchTasks();
-setTasks(tasks);
-renderTable(getVisibleTasks());
+import { isLoggedIn } from "./auth.js";
 
 initTableEvents();
 initPaginationEvents();
@@ -22,3 +22,15 @@ initFormEvents();
 initSearchEvents();
 initFilterEvents();
 initSortEvents();
+initAuthEvents();
+
+
+if (isLoggedIn()) {
+  showApp();
+  const tasks = await fetchTasks();
+  setTasks(tasks);
+  renderTable(getVisibleTasks());
+} else {
+  showLoginForm();
+}
+

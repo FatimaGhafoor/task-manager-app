@@ -16,6 +16,7 @@ import { renderTable, showSpinner, hideSpinner } from "./dom.js";
 import { deleteTask, addTask, updateTask } from "./api.js";
 import { debounce } from "./utils.js";
 import { showToast } from "./toast.js";
+import { login, logout, isLoggedIn } from "./auth.js";
 
 let editingTaskId = null;
 
@@ -26,7 +27,48 @@ const taskForm = document.getElementById("task-form");
 const searchInput = document.getElementById("search-input");
 const statusFilter = document.getElementById("status-filter");
 const sortHeaders = document.querySelectorAll(".sortable");
+const loginForm = document.getElementById("login-form");
+const logoutBtn = document.getElementById("logout-btn");
+const loginSection = document.getElementById("login-section");
+const appSection = document.getElementById("app-section");
 
+// 3- Authentication events
+export function initAuthEvents() {
+  loginForm.addEventListener("submit", handleLogin);
+  logoutBtn.addEventListener("click", handleLogout);
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const username = document.getElementById("login-username").value;
+  const password = document.getElementById("login-password").value;
+
+  const success = login(username, password);
+  if (success) {
+    showApp();
+    showToast("Login successful!", "success");
+  } else {
+    showToast("Invalid credentials.", "error");
+  }
+}
+
+function handleLogout() {
+  logout();
+  showLoginForm();
+  showToast("Logged out successfully.", "success");
+}
+
+export function showApp() {
+  loginSection.classList.add("hidden");
+  appSection.classList.remove("hidden");
+}
+
+export function showLoginForm() {
+  loginSection.classList.remove("hidden");
+  appSection.classList.add("hidden");
+}
+
+// 4- Initialize app based on login state
 export function initSortEvents() {
   sortHeaders.forEach((header) => {
     header.addEventListener("click", handleSortClick);
@@ -76,6 +118,7 @@ function handleSearchInput(e) {
   renderTable(getVisibleTasks());
 }
 
+// 5- Form events
 export function initFormEvents() {
   taskForm.addEventListener("submit", handleFormSubmit);
 }
@@ -122,7 +165,7 @@ function resetForm() {
   const submitBtn = taskForm.querySelector('button[type="submit"]');
   submitBtn.textContent = "Add Task";
 }
-// 3- Table events
+// 6- Table events
 export function initTableEvents() {
   tableBody.addEventListener("click", handleTableClick);
 }
@@ -141,8 +184,8 @@ function handleTableClick(e) {
     return;
   }
 }
-// 4- Task actions
 
+// 7- Edit and Delete handlers
 function handleEditTask(taskId) {
   const state = getState();
   const task = state.tasks.find((t) => t.id === taskId);
@@ -166,7 +209,6 @@ async function handleDeleteTask(taskId) {
   if (!confirmed) return;
 
   try {
-    // Implement delete functionality here
     showSpinner();
     await deleteTask(taskId);
     removeTaskFromState(taskId);
@@ -175,12 +217,11 @@ async function handleDeleteTask(taskId) {
   } catch (error) {
     showToast("Failed to delete task.", "error");
   } finally {
-    // Optionally, you can re-render the table or update the UI after deletion
     hideSpinner();
   }
 }
 
-// 5- Pagination events
+// 8- Pagination events
 export function initPaginationEvents() {
   paginationControls.addEventListener("click", handlePaginationClick);
 }
