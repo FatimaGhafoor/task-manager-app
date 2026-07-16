@@ -67,3 +67,72 @@ td {
 .toast-error {
   background-color: var(--toast-error);
 }
+
+/* ---- Responsive layout ---- */
+
+#tasks-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  #task-form,
+  #login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #task-form input,
+  #task-form select,
+  #login-form input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #search-input,
+  #status-filter {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th,
+  td {
+    padding: 6px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  #pagination-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  #toast-container {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+  }
+
+  .toast {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
