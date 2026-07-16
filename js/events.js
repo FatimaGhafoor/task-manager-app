@@ -31,6 +31,30 @@ const loginForm = document.getElementById("login-form");
 const logoutBtn = document.getElementById("logout-btn");
 const loginSection = document.getElementById("login-section");
 const appSection = document.getElementById("app-section");
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+
+// 3- Theme toggle events
+export function initThemeEvents() {
+  applyStoredTheme();
+  themeToggleBtn.addEventListener("click", handleThemeToggle);
+}
+
+function handleThemeToggle() {
+  const isDark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  updateToggleButtonText(isDark);
+}
+
+function applyStoredTheme() {
+  const savedTheme = localStorage.getItem("theme");
+  const isDark = savedTheme === "dark";
+  document.body.classList.toggle("dark-mode", isDark);
+  updateToggleButtonText(isDark);
+}
+
+function updateToggleButtonText(isDark) {
+  themeToggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+}
 
 // 3- Authentication events
 export function initAuthEvents() {

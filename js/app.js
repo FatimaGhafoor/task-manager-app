@@ -13,6 +13,7 @@ import {
   initAuthEvents,
   showLoginForm,
   showApp,
+  initThemeEvents,
 } from "./events.js";
 import { isLoggedIn } from "./auth.js";
 
@@ -23,7 +24,7 @@ initSearchEvents();
 initFilterEvents();
 initSortEvents();
 initAuthEvents();
-
+initThemeEvents();
 
 if (isLoggedIn()) {
   showApp();
@@ -33,4 +34,3 @@ if (isLoggedIn()) {
 } else {
   showLoginForm();
 }
-

@@ -1,4 +1,30 @@
 /* style.css */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --border-color: #ccc;
+  --toast-success: #22c55e;
+  --toast-error: #ef4444;
+}
+
+body.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #f0f0f0;
+  --border-color: #444;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+th,
+td {
+  border: 1px solid var(--border-color);
+}
 
 .hidden {
   display: none;
@@ -35,9 +61,9 @@ td {
 }
 
 .toast-success {
-  background-color: #22c55e;
+  background-color: var(--toast-success);
 }
 
 .toast-error {
-  background-color: #ef4444;
+  background-color: var(--toast-error);
 }
