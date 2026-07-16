@@ -1,0 +1,89 @@
+/* reset, body, typography, buttons (generic)
+   and form elements */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin: 0 0 4px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 24px 0 12px;
+  font-weight: 600;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#app-section > button {
+  margin-right: 8px;
+  margin-bottom: 16px;
+}
+
+/* ---- Buttons (general) ---- */
+button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    transform 0.1s;
+}
+
+button:hover {
+  background-color: var(--border-color);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Inputs & selects (general) ---- */
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-color);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}

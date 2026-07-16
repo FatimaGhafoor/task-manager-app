@@ -1,0 +1,266 @@
+/* forms, table, board, toast, pagination */
+
+/* ---- Login screen ---- */
+#login-section {
+  max-width: 360px;
+  margin: 80px auto;
+  background: var(--surface-color);
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---- Primary action buttons ---- */
+#task-form button[type="submit"],
+#login-form button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  font-weight: 600;
+}
+
+#task-form button[type="submit"]:hover,
+#login-form button[type="submit"]:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ---- Table action buttons ---- */
+.edit-btn {
+  background-color: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.edit-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+.delete-btn:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* ---- Add/Edit task form ---- */
+#task-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--surface-color);
+  padding: 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+/* ---- Search + filter row ---- */
+#search-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+#search-input,
+#status-filter {
+  margin-bottom: 16px;
+  margin-right: 8px;
+}
+
+/* ---- Toggle view button ---- */
+#toggle-view-btn {
+  margin-bottom: 16px;
+  background-color: var(--surface-color);
+  font-weight: 600;
+}
+
+/* ---- Table ---- */
+#tasks-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.sortable:hover {
+  color: var(--text-color);
+}
+
+.sort-icon {
+  margin-left: 4px;
+  font-size: 0.75rem;
+}
+
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: var(--bg-color);
+}
+
+#empty-state {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-muted);
+  background: var(--surface-color);
+  border-radius: var(--radius);
+}
+
+/* ---- Pagination ---- */
+#pagination-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.page-btn {
+  min-width: 36px;
+  padding: 6px;
+}
+
+.page-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* ---- Toasts ---- */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-md);
+  animation: slide-in 0.25s ease-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast-success {
+  background-color: var(--toast-success);
+}
+
+.toast-error {
+  background-color: var(--toast-error);
+}
+
+/* ---- Board view ---- */
+#board-view {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.board-column {
+  flex: 1;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 300px;
+  box-shadow: var(--shadow);
+}
+
+.board-column h3 {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.column-body {
+  min-height: 250px;
+}
+
+.task-card {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: grab;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.15s;
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.task-card.dragging {
+  opacity: 0.4;
+}
+
+.column-body.drag-over {
+  background: rgba(79, 70, 229, 0.08);
+  border-radius: 6px;
+  outline: 2px dashed var(--primary-color);
+  outline-offset: -2px;
+}
+
+/* ---- Loading spinner ---- */
+#loading-spinner {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

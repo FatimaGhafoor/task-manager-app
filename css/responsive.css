@@ -1,0 +1,58 @@
+/* media queries */
+
+@media (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  #task-form,
+  #login-form {
+    flex-direction: column;
+  }
+
+  #task-form input,
+  #task-form select,
+  #login-form input {
+    width: 100%;
+  }
+
+  #search-input,
+  #status-filter {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  thead th,
+  tbody td {
+    padding: 8px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  #board-view {
+    flex-direction: column;
+  }
+
+  #toast-container {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+  }
+
+  .toast {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
