@@ -72,8 +72,8 @@ export async function addTask(task) {
   await simulateNetwork();
   const tasks = readFromStorage();
   const newTask = { ...task, id: Date.now().toString() };
-  tasks.push(newTask);
-  writeToStorage(tasks);
+  const newTasksList = [...tasks, newTask];
+  writeToStorage(newTasksList);
   return newTask;
 }
 
