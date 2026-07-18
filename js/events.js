@@ -38,6 +38,7 @@ const toggleViewBtn = document.getElementById("toggle-view-btn");
 const boardView = document.getElementById("board-view");
 const tableWrapper = document.getElementById("tasks-table-wrapper");
 
+// 3- View toggle events
 export function initViewToggleEvents() {
   toggleViewBtn.addEventListener("click", handleViewToggle);
 }
@@ -57,7 +58,7 @@ function handleViewToggle() {
   }
 }
 
-// 3- Theme toggle events
+// 4- Theme toggle events
 export function initThemeEvents() {
   applyStoredTheme();
   themeToggleBtn.addEventListener("click", handleThemeToggle);
@@ -80,7 +81,7 @@ function updateToggleButtonText(isDark) {
   themeToggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
 }
 
-// 3- Authentication events
+// 5- Authentication events
 export function initAuthEvents() {
   loginForm.addEventListener("submit", handleLogin);
   logoutBtn.addEventListener("click", handleLogout);
@@ -116,7 +117,7 @@ export function showLoginForm() {
   appSection.classList.add("hidden");
 }
 
-// 4- Initialize app based on login state
+// 6- Initialize app based on login state
 export function initSortEvents() {
   sortHeaders.forEach((header) => {
     header.addEventListener("click", handleSortClick);
@@ -147,6 +148,7 @@ function updateSortIcons(activeField, direction) {
   });
 }
 
+// 7- Filter events
 export function initFilterEvents() {
   statusFilter.addEventListener("change", handleStatusFilterChange);
 }
@@ -166,7 +168,7 @@ function handleSearchInput(e) {
   renderTable(getVisibleTasks());
 }
 
-// 5- Form events
+// 8- Form events
 export function initFormEvents() {
   taskForm.addEventListener("submit", handleFormSubmit);
 }
@@ -213,7 +215,7 @@ function resetForm() {
   const submitBtn = taskForm.querySelector('button[type="submit"]');
   submitBtn.textContent = "Add Task";
 }
-// 6- Table events
+// 9- Table events
 export function initTableEvents() {
   tableBody.addEventListener("click", handleTableClick);
 }
@@ -233,7 +235,7 @@ function handleTableClick(e) {
   }
 }
 
-// 7- Edit and Delete handlers
+// 10- Edit and Delete handlers
 function handleEditTask(taskId) {
   const state = getState();
   const task = state.tasks.find((t) => t.id === taskId);
@@ -269,7 +271,7 @@ async function handleDeleteTask(taskId) {
   }
 }
 
-// 8- Pagination events
+// 11- Pagination events
 export function initPaginationEvents() {
   paginationControls.addEventListener("click", handlePaginationClick);
 }
